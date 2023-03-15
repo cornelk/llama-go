@@ -104,7 +104,7 @@ endif()
 #     set(LLAMA_EXTRA_FLAGS ${LLAMA_EXTRA_FLAGS} -DGGML_PERF)
 # endif()
 
-add_executable(llama
+add_library(llama
     main.cpp
     utils.cpp
     utils.h)
@@ -120,7 +120,7 @@ add_library(ggml
 
 target_compile_definitions(ggml PUBLIC ${LLAMA_EXTRA_FLAGS})
 target_compile_definitions(llama PUBLIC ${LLAMA_EXTRA_FLAGS})
-target_compile_definitions(quantize PUBLIC ${LLAMA_EXTRA_FLAGS})
+target_compile_definitions(quantize PUBLIC ${LLAMA_EXTRA_FLAGS} -DQUANTIZE)
 
 target_link_libraries(ggml PRIVATE ${LLAMA_EXTRA_LIBS})
 target_include_directories(ggml PUBLIC .)
