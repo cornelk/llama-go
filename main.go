@@ -27,6 +27,8 @@ var (
 	temp          = 0.80
 	repeatPenalty = 1.30
 
+	nCtx = 512 // context size
+
 	options = map[string]interface{}{
 		"repeat_last_n":  &repeatLastN, // last n tokens to penalize
 		"repeat_penalty": &repeatPenalty,
@@ -57,7 +59,7 @@ func main() {
 
 	fmt.Printf("Loading model %s...\n", model)
 	modelPath := C.CString(model)
-	result := C.llama_bootstrap(modelPath, state)
+	result := C.llama_bootstrap(modelPath, state, C.int(nCtx))
 	if result != 0 {
 		fmt.Println("Loading the model failed")
 		os.Exit(1)
