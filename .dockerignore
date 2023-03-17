@@ -1,8 +1,6 @@
 *.o
-*.so
 *.a
 .cache/
-.idea
 .vs/
 .vscode/
 .DS_Store
@@ -20,11 +18,7 @@ models/*
 
 /main
 /quantize
-/result
-/llama-go
 
 arm_neon.h
 compile_commands.json
-
-.envrc
-.direnv/
+Dockerfile

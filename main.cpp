@@ -874,6 +874,8 @@ int llama_predict(void* params_ptr, void* state_pr) {
 
     std::vector<float> logits;
 
+    // Add a space in front of the first character to match OG llama tokenizer behavior
+    params.prompt.insert(0, 1, ' ');
     // tokenize the prompt
     std::vector<gpt_vocab::id> embd_inp = ::llama_tokenize(vocab, params.prompt, true);
 
