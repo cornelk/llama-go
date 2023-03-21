@@ -1,7 +1,7 @@
 package main
 
-// #cgo CFLAGS:   -I. -O3 -DNDEBUG -std=c11 -fPIC -pthread -mavx -mavx2 -mfma -mf16c -msse3
-// #cgo CXXFLAGS: -O3 -DNDEBUG -std=c++11 -fPIC -pthread -I.
+// #cgo CFLAGS:   -I. -O3 -DNDEBUG -std=c17 -fPIC -pthread -mavx -mavx2 -mfma -mf16c -msse3
+// #cgo CXXFLAGS: -O3 -DNDEBUG -std=c++17 -fPIC -pthread -I.
 // #include "main.h"
 import "C"
 import (
@@ -59,7 +59,7 @@ func main() {
 
 	fmt.Printf("Loading model %s...\n", model)
 	modelPath := C.CString(model)
-	result := C.llama_bootstrap(modelPath, state, C.int(nCtx))
+	result := C.llama_bootstrap(modelPath, state, C.int(nCtx), 0)
 	if result != 0 {
 		fmt.Println("Loading the model failed")
 		os.Exit(1)
