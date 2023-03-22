@@ -27,7 +27,8 @@ var (
 	temp          = 0.80
 	repeatPenalty = 1.30
 
-	nCtx = 512 // context size
+	nParts = -1  // model parts, -1 defaults to stored known ones
+	nCtx   = 512 // context size
 
 	options = map[string]interface{}{
 		"repeat_last_n":  &repeatLastN, // last n tokens to penalize
@@ -48,6 +49,7 @@ func main() {
 	flags.StringVar(&model, "m", "./models/7B/ggml-model-q4_0.bin", "path to q4_0.bin model file to load")
 	flags.IntVar(&threads, "t", 4, "number of threads to use during computation")
 	flags.IntVar(&tokens, "n", 128, "number of tokens to predict")
+	flags.IntVar(&nParts, "p", -1, "model parts")
 
 	err := flags.Parse(os.Args[1:])
 	if err != nil {
@@ -59,7 +61,7 @@ func main() {
 
 	fmt.Printf("Loading model %s...\n", model)
 	modelPath := C.CString(model)
-	result := C.llama_bootstrap(modelPath, state, C.int(nCtx), 0)
+	result := C.llama_bootstrap(modelPath, state, C.int(nCtx), C.int(nParts), 0)
 	if result != 0 {
 		fmt.Println("Loading the model failed")
 		os.Exit(1)
